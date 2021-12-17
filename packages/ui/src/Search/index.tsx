@@ -12,7 +12,6 @@ import { Icon } from '../Icon';
 import { Button } from '../Button';
 
 export const Search: React.FC<SearchProps> = (props) => {
-  const [value, setValue] = React.useState('');
   const [show, setShow] = React.useState<string | undefined>();
   const inputRef = React.useRef<HTMLInputElement>(null);
   const layout = React.useContext(layoutContext);
@@ -43,13 +42,12 @@ export const Search: React.FC<SearchProps> = (props) => {
 
   const onChangeHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
     typeof props.onChange === 'function' && props.onChange(e.target.value);
-    setValue(e.target.value);
   };
 
   return (
     <SearchStyle className={props.className}>
       <Button appearance="ghost" onClick={handleOpen}>
-        <Icon name="search-outline" />
+        <Icon name="edit-2-outline" />
       </Button>
       {show !== undefined && (
         <Overlay>
@@ -73,7 +71,7 @@ export const Search: React.FC<SearchProps> = (props) => {
                         e.preventDefault();
                         if (e.key === 'Enter') {
                           handleClose();
-                          props.submit(value);
+                          props.submit(props.value);
                         }
                       }}
                       onChange={onChangeHandle}
@@ -81,7 +79,7 @@ export const Search: React.FC<SearchProps> = (props) => {
                       className="search-input"
                       autoComplete="off"
                       tabIndex={-1}
-                      value={value}
+                      value={props.value}
                     />
                   </div>
                   <span className="info">{props.hint}</span>
